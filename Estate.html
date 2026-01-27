@@ -1,0 +1,1285 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VISSUAL Realty | Luxury Properties</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #0A0A0A;
+      --secondary: #FFFFFF;
+      --accent: #C2A878;
+      --slate: #5A5A5A;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      scroll-behavior: smooth;
+    }
+    
+    .font-playfair {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .font-montserrat {
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #0A0A0A;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #C2A878;
+      border-radius: 4px;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slowZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+    
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    .animate-scale-in {
+      animation: scaleIn 0.6s ease-out forwards;
+    }
+    
+    .animate-slide-left {
+      animation: slideInLeft 0.8s ease-out forwards;
+    }
+    
+    .animate-slide-right {
+      animation: slideInRight 0.8s ease-out forwards;
+    }
+    
+    .hero-image {
+      animation: slowZoom 20s ease-in-out infinite alternate;
+    }
+    
+    /* Intersection Observer animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .reveal-left.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .reveal-right.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    /* Header transition */
+    .header-transparent {
+      background: transparent;
+    }
+    
+    .header-solid {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Nav link underline animation */
+    .nav-link {
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #C2A878;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Button hover effects */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    
+    /* Card hover effects */
+    .property-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .property-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .property-card .card-image {
+      transition: transform 0.6s ease;
+    }
+    
+    .property-card:hover .card-image {
+      transform: scale(1.08);
+    }
+    
+    /* Carousel */
+    .carousel-container {
+      overflow: hidden;
+    }
+    
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Heart animation */
+    .heart-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .heart-btn:hover {
+      transform: scale(1.2);
+    }
+    
+    .heart-btn.active svg {
+      fill: #C2A878;
+      stroke: #C2A878;
+    }
+    
+    /* Parallax */
+    .parallax-container {
+      overflow: hidden;
+    }
+    
+    .parallax-bg {
+      transition: transform 0.1s linear;
+    }
+    
+    /* Video section overlay */
+    .video-overlay {
+      background: linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.6) 100%);
+    }
+    
+    /* Testimonial cards */
+    .testimonial-card {
+      transition: all 0.4s ease;
+    }
+    
+    .testimonial-card:hover {
+      transform: scale(1.02);
+    }
+    
+    /* Agent cards */
+    .agent-card {
+      transition: all 0.4s ease;
+    }
+    
+    .agent-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .agent-card .agent-overlay {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .agent-card:hover .agent-overlay {
+      opacity: 1;
+    }
+    
+    /* Mobile menu */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    
+    /* Search bar focus */
+    .search-input:focus {
+      box-shadow: 0 0 0 2px #C2A878;
+    }
+    
+    /* Neighborhood icons */
+    .neighborhood-item {
+      transition: all 0.3s ease;
+    }
+    
+    .neighborhood-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .neighborhood-item:hover .icon-circle {
+      background: #C2A878;
+    }
+    
+    .neighborhood-item:hover .icon-circle svg {
+      stroke: #0A0A0A;
+    }
+    
+    /* Dots indicator */
+    .dot {
+      transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+      width: 24px;
+      border-radius: 4px;
+    }
+    
+    /* Swiper custom */
+    .swipe-hint {
+      animation: fadeIn 0.5s ease 2s forwards;
+      opacity: 0;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-montserrat bg-[#0A0A0A] text-white overflow-x-hidden"><!-- Header -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 header-transparent transition-all duration-500">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20"><!-- Logo --> <a href="#" class="flex items-center space-x-2">
+      <div class="text-2xl font-playfair tracking-widest"><span class="text-[#C2A878]">VISSUAL</span> <span class="text-white font-light ml-1">Realty</span>
+      </div></a> <!-- Desktop Navigation -->
+     <nav class="hidden lg:flex items-center space-x-8"><a href="#home" class="nav-link text-sm tracking-wider hover:text-[#C2A878] transition-colors">HOME</a> <a href="#listings" class="nav-link text-sm tracking-wider hover:text-[#C2A878] transition-colors">LISTINGS</a> <a href="#about" class="nav-link text-sm tracking-wider hover:text-[#C2A878] transition-colors">ABOUT</a> <a href="#agents" class="nav-link text-sm tracking-wider hover:text-[#C2A878] transition-colors">AGENTS</a> <a href="#contact" class="nav-link text-sm tracking-wider hover:text-[#C2A878] transition-colors">CONTACT</a>
+     </nav><!-- Icons -->
+     <div class="hidden lg:flex items-center space-x-4"><button class="p-2 hover:text-[#C2A878] transition-colors" aria-label="Search">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+       </svg></button> <a href="tel:+1234567890" class="flex items-center space-x-2 text-sm hover:text-[#C2A878] transition-colors">
+       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+       </svg><span>Call Us</span> </a>
+     </div><!-- Mobile Menu Button --> <button id="mobileMenuBtn" class="lg:hidden p-2" aria-label="Menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+      </svg></button>
+    </div>
+   </div>
+  </header><!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 w-72 bg-[#0A0A0A] z-50 lg:hidden">
+   <div class="p-6"><button id="closeMobileMenu" class="absolute top-6 right-6" aria-label="Close menu">
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+     </svg></button>
+    <nav class="mt-12 flex flex-col space-y-6"><a href="#home" class="text-lg tracking-wider hover:text-[#C2A878] transition-colors">HOME</a> <a href="#listings" class="text-lg tracking-wider hover:text-[#C2A878] transition-colors">LISTINGS</a> <a href="#about" class="text-lg tracking-wider hover:text-[#C2A878] transition-colors">ABOUT</a> <a href="#agents" class="text-lg tracking-wider hover:text-[#C2A878] transition-colors">AGENTS</a> <a href="#contact" class="text-lg tracking-wider hover:text-[#C2A878] transition-colors">CONTACT</a>
+    </nav>
+    <div class="mt-8 pt-8 border-t border-[#333]"><a href="tel:+1234567890" class="flex items-center space-x-3 text-[#C2A878]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+      </svg><span>+1 (234) 567-890</span> </a>
+    </div>
+   </div>
+  </div><!-- Mobile Menu Overlay -->
+  <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div><!-- Hero Section -->
+  <section id="home" class="relative h-screen min-h-[600px] overflow-hidden"><!-- Hero Carousel -->
+   <div id="heroCarousel" class="absolute inset-0">
+    <div class="hero-slide absolute inset-0 opacity-100 transition-opacity duration-1000">
+     <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-10"></div>
+     <div class="hero-image absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);"></div>
+     <div class="absolute inset-0 z-5">
+      <svg class="w-full h-full opacity-10" viewbox="0 0 100 100" preserveaspectratio="none"><defs>
+        <lineargradient id="heroGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+         <stop offset="0%" style="stop-color:#C2A878;stop-opacity:0.3" />
+         <stop offset="100%" style="stop-color:#0A0A0A;stop-opacity:0" />
+        </lineargradient>
+       </defs> <polygon fill="url(#heroGrad1)" points="0,100 100,0 100,100" />
+      </svg>
+     </div>
+    </div>
+    <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+     <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-10"></div>
+     <div class="hero-image absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d2d5a 100%);"></div>
+    </div>
+    <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+     <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-10"></div>
+     <div class="hero-image absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(135deg, #1a0a0a 0%, #2d1f1f 50%, #3d2929 100%);"></div>
+    </div>
+   </div><!-- Hero Content -->
+   <div class="relative z-20 h-full flex flex-col justify-center items-center text-center px-4">
+    <div class="max-w-4xl">
+     <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-4 animate-fade-in-up" style="animation-delay: 0.2s;">LUXURY REAL ESTATE</p>
+     <h1 id="heroHeadline" class="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium mb-6 animate-fade-in-up" style="animation-delay: 0.4s;">Discover Exceptional Properties</h1>
+     <p id="heroSubtext" class="text-lg md:text-xl text-gray-300 mb-10 font-light animate-fade-in-up" style="animation-delay: 0.6s;">Luxury homes. Curated for you.</p>
+     <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.8s;"><a href="#listings" id="ctaPrimary" class="btn-primary inline-flex items-center justify-center px-8 py-4 bg-[#C2A878] text-[#0A0A0A] font-semibold tracking-wider hover:bg-[#d4bc92] transition-all"> BROWSE LISTINGS </a> <a href="#contact" id="ctaSecondary" class="inline-flex items-center justify-center px-8 py-4 border border-white/30 hover:border-[#C2A878] hover:text-[#C2A878] transition-all tracking-wider"> CONTACT AN AGENT </a>
+     </div>
+    </div><!-- Hero Carousel Dots -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2"><button class="dot w-2 h-2 bg-[#C2A878] rounded-full active" data-slide="0"></button> <button class="dot w-2 h-2 bg-white/30 rounded-full" data-slide="1"></button> <button class="dot w-2 h-2 bg-white/30 rounded-full" data-slide="2"></button>
+    </div><!-- Scroll Indicator -->
+    <div class="absolute bottom-8 right-8 hidden md:block animate-bounce">
+     <svg class="w-6 h-6 text-[#C2A878]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+     </svg>
+    </div>
+   </div>
+  </section><!-- Smart Search Section -->
+  <section class="relative z-30 -mt-16 px-4">
+   <div class="max-w-6xl mx-auto">
+    <div class="bg-white/5 backdrop-blur-xl rounded-lg p-6 md:p-8 border border-white/10">
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div class="lg:col-span-1"><label class="block text-xs text-gray-400 mb-2 tracking-wider">LOCATION</label> <select class="search-input w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none transition-all"> <option value="">Any Location</option> <option>Beverly Hills</option> <option>Malibu</option> <option>Manhattan</option> <option>Miami Beach</option> </select>
+      </div>
+      <div class="lg:col-span-1"><label class="block text-xs text-gray-400 mb-2 tracking-wider">PRICE RANGE</label> <select class="search-input w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none transition-all"> <option value="">Any Price</option> <option>$500K - $1M</option> <option>$1M - $5M</option> <option>$5M - $10M</option> <option>$10M+</option> </select>
+      </div>
+      <div class="lg:col-span-1"><label class="block text-xs text-gray-400 mb-2 tracking-wider">PROPERTY TYPE</label> <select class="search-input w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none transition-all"> <option value="">Any Type</option> <option>House</option> <option>Penthouse</option> <option>Villa</option> <option>Condo</option> </select>
+      </div>
+      <div class="lg:col-span-1"><label class="block text-xs text-gray-400 mb-2 tracking-wider">BEDROOMS</label> <select class="search-input w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white focus:outline-none transition-all"> <option value="">Any</option> <option>1+</option> <option>2+</option> <option>3+</option> <option>4+</option> <option>5+</option> </select>
+      </div>
+      <div class="lg:col-span-1 flex items-end"><button class="btn-primary w-full bg-[#C2A878] text-[#0A0A0A] font-semibold py-3 px-6 rounded hover:bg-[#d4bc92] transition-all flex items-center justify-center space-x-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg><span>SEARCH</span> </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Featured Properties Carousel -->
+  <section class="py-20 md:py-32 px-4">
+   <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 reveal">
+     <div>
+      <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-2">HANDPICKED FOR YOU</p>
+      <h2 id="featuredTitle" class="font-playfair text-3xl md:text-4xl lg:text-5xl">Featured Properties</h2>
+     </div>
+     <div class="flex space-x-3 mt-6 md:mt-0"><button id="featuredPrev" class="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center hover:border-[#C2A878] hover:text-[#C2A878] transition-all">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+       </svg></button> <button id="featuredNext" class="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center hover:border-[#C2A878] hover:text-[#C2A878] transition-all">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
+       </svg></button>
+     </div>
+    </div>
+    <div class="carousel-container reveal" style="transition-delay: 0.2s;">
+     <div id="featuredCarousel" class="carousel-track"><!-- Property 1 -->
+      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
+       <div class="property-card bg-white/5 rounded-lg overflow-hidden group">
+        <div class="relative h-72 overflow-hidden">
+         <div class="card-image absolute inset-0 bg-gradient-to-br from-[#2d3436] to-[#636e72]"></div>
+         <div class="absolute top-4 left-4 bg-[#C2A878] text-[#0A0A0A] px-3 py-1 text-xs font-semibold tracking-wider">
+          FEATURED
+         </div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+        <div class="p-6">
+         <div class="flex justify-between items-start mb-3">
+          <h3 class="font-playfair text-xl">The Belvedere Estate</h3><span class="text-[#C2A878] font-semibold">$8.5M</span>
+         </div>
+         <p class="text-gray-400 text-sm mb-4">Beverly Hills, CA</p>
+         <div class="flex items-center space-x-4 text-sm text-gray-400 mb-4"><span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+           </svg>6 Beds</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg>8 Baths</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+           </svg>12,500 sqft</span>
+         </div><button class="w-full py-3 border border-white/20 rounded hover:border-[#C2A878] hover:text-[#C2A878] transition-all text-sm tracking-wider">VIEW DETAILS</button>
+        </div>
+       </div>
+      </div><!-- Property 2 -->
+      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
+       <div class="property-card bg-white/5 rounded-lg overflow-hidden group">
+        <div class="relative h-72 overflow-hidden">
+         <div class="card-image absolute inset-0 bg-gradient-to-br from-[#0c3547] to-[#207567]"></div>
+         <div class="absolute top-4 left-4 bg-[#C2A878] text-[#0A0A0A] px-3 py-1 text-xs font-semibold tracking-wider">
+          FEATURED
+         </div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+        <div class="p-6">
+         <div class="flex justify-between items-start mb-3">
+          <h3 class="font-playfair text-xl">Ocean View Penthouse</h3><span class="text-[#C2A878] font-semibold">$12.2M</span>
+         </div>
+         <p class="text-gray-400 text-sm mb-4">Malibu, CA</p>
+         <div class="flex items-center space-x-4 text-sm text-gray-400 mb-4"><span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+           </svg>4 Beds</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg>5 Baths</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+           </svg>8,200 sqft</span>
+         </div><button class="w-full py-3 border border-white/20 rounded hover:border-[#C2A878] hover:text-[#C2A878] transition-all text-sm tracking-wider">VIEW DETAILS</button>
+        </div>
+       </div>
+      </div><!-- Property 3 -->
+      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
+       <div class="property-card bg-white/5 rounded-lg overflow-hidden group">
+        <div class="relative h-72 overflow-hidden">
+         <div class="card-image absolute inset-0 bg-gradient-to-br from-[#2c1810] to-[#5c3a21]"></div>
+         <div class="absolute top-4 left-4 bg-[#C2A878] text-[#0A0A0A] px-3 py-1 text-xs font-semibold tracking-wider">
+          NEW
+         </div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+        <div class="p-6">
+         <div class="flex justify-between items-start mb-3">
+          <h3 class="font-playfair text-xl">Manhattan Skyline</h3><span class="text-[#C2A878] font-semibold">$15.8M</span>
+         </div>
+         <p class="text-gray-400 text-sm mb-4">New York, NY</p>
+         <div class="flex items-center space-x-4 text-sm text-gray-400 mb-4"><span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+           </svg>5 Beds</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg>6 Baths</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+           </svg>6,800 sqft</span>
+         </div><button class="w-full py-3 border border-white/20 rounded hover:border-[#C2A878] hover:text-[#C2A878] transition-all text-sm tracking-wider">VIEW DETAILS</button>
+        </div>
+       </div>
+      </div><!-- Property 4 -->
+      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-3">
+       <div class="property-card bg-white/5 rounded-lg overflow-hidden group">
+        <div class="relative h-72 overflow-hidden">
+         <div class="card-image absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#4a4a6a]"></div>
+         <div class="absolute top-4 left-4 bg-white text-[#0A0A0A] px-3 py-1 text-xs font-semibold tracking-wider">
+          EXCLUSIVE
+         </div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg></button>
+        </div>
+        <div class="p-6">
+         <div class="flex justify-between items-start mb-3">
+          <h3 class="font-playfair text-xl">Villa Serenity</h3><span class="text-[#C2A878] font-semibold">$22.5M</span>
+         </div>
+         <p class="text-gray-400 text-sm mb-4">Miami Beach, FL</p>
+         <div class="flex items-center space-x-4 text-sm text-gray-400 mb-4"><span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+           </svg>8 Beds</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg>10 Baths</span> <span class="flex items-center">
+           <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+           </svg>18,000 sqft</span>
+         </div><button class="w-full py-3 border border-white/20 rounded hover:border-[#C2A878] hover:text-[#C2A878] transition-all text-sm tracking-wider">VIEW DETAILS</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Premium Listings Grid -->
+  <section id="listings" class="py-20 md:py-32 px-4 bg-gradient-to-b from-transparent to-[#0f0f0f]">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+     <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-2">EXPLORE OUR COLLECTION</p>
+     <h2 id="listingsTitle" class="font-playfair text-3xl md:text-4xl lg:text-5xl">Premium Listings</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Listing 1 -->
+     <div class="property-card bg-white/5 rounded-lg overflow-hidden reveal" style="transition-delay: 0.1s;">
+      <div class="relative h-64 overflow-hidden">
+       <div class="card-image absolute inset-0 bg-gradient-to-br from-[#434343] to-[#000000]"></div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg></button>
+      </div>
+      <div class="p-6">
+       <div class="flex justify-between items-start mb-2">
+        <h3 class="font-playfair text-lg">The Meridian Tower</h3><span class="text-[#C2A878] font-semibold text-sm">$4.2M</span>
+       </div>
+       <p class="text-gray-400 text-sm mb-3">Downtown LA, CA</p>
+       <div class="flex items-center space-x-3 text-xs text-gray-500"><span>3 Beds</span> <span>•</span> <span>4 Baths</span> <span>•</span> <span>4,500 sqft</span>
+       </div>
+      </div>
+     </div><!-- Listing 2 -->
+     <div class="property-card bg-white/5 rounded-lg overflow-hidden reveal" style="transition-delay: 0.2s;">
+      <div class="relative h-64 overflow-hidden">
+       <div class="card-image absolute inset-0 bg-gradient-to-br from-[#536976] to-[#292e49]"></div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg></button>
+      </div>
+      <div class="p-6">
+       <div class="flex justify-between items-start mb-2">
+        <h3 class="font-playfair text-lg">Pacific Heights Villa</h3><span class="text-[#C2A878] font-semibold text-sm">$7.8M</span>
+       </div>
+       <p class="text-gray-400 text-sm mb-3">San Francisco, CA</p>
+       <div class="flex items-center space-x-3 text-xs text-gray-500"><span>5 Beds</span> <span>•</span> <span>6 Baths</span> <span>•</span> <span>7,200 sqft</span>
+       </div>
+      </div>
+     </div><!-- Listing 3 -->
+     <div class="property-card bg-white/5 rounded-lg overflow-hidden reveal" style="transition-delay: 0.3s;">
+      <div class="relative h-64 overflow-hidden">
+       <div class="card-image absolute inset-0 bg-gradient-to-br from-[#3a1c71] to-[#d76d77]"></div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg></button>
+      </div>
+      <div class="p-6">
+       <div class="flex justify-between items-start mb-2">
+        <h3 class="font-playfair text-lg">Sunset Blvd Residence</h3><span class="text-[#C2A878] font-semibold text-sm">$5.5M</span>
+       </div>
+       <p class="text-gray-400 text-sm mb-3">Hollywood Hills, CA</p>
+       <div class="flex items-center space-x-3 text-xs text-gray-500"><span>4 Beds</span> <span>•</span> <span>5 Baths</span> <span>•</span> <span>5,800 sqft</span>
+       </div>
+      </div>
+     </div><!-- Listing 4 -->
+     <div class="property-card bg-white/5 rounded-lg overflow-hidden reveal" style="transition-delay: 0.4s;">
+      <div class="relative h-64 overflow-hidden">
+       <div class="card-image absolute inset-0 bg-gradient-to-br from-[#232526] to-[#414345]"></div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg></button>
+      </div>
+      <div class="p-6">
+       <div class="flex justify-between items-start mb-2">
+        <h3 class="font-playfair text-lg">Central Park West</h3><span class="text-[#C2A878] font-semibold text-sm">$18.5M</span>
+       </div>
+       <p class="text-gray-400 text-sm mb-3">Upper West Side, NY</p>
+       <div class="flex items-center space-x-3 text-xs text-gray-500"><span>6 Beds</span> <span>•</span> <span>7 Baths</span> <span>•</span> <span>9,500 sqft</span>
+       </div>
+      </div>
+     </div><!-- Listing 5 -->
+     <div class="property-card bg-white/5 rounded-lg overflow-hidden reveal" style="transition-delay: 0.5s;">
+      <div class="relative h-64 overflow-hidden">
+       <div class="card-image absolute inset-0 bg-gradient-to-br from-[#0f2027] to-[#2c5364]"></div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg></button>
+      </div>
+      <div class="p-6">
+       <div class="flex justify-between items-start mb-2">
+        <h3 class="font-playfair text-lg">Biscayne Bay Estate</h3><span class="text-[#C2A878] font-semibold text-sm">$11.2M</span>
+       </div>
+       <p class="text-gray-400 text-sm mb-3">Miami, FL</p>
+       <div class="flex items-center space-x-3 text-xs text-gray-500"><span>7 Beds</span> <span>•</span> <span>8 Baths</span> <span>•</span> <span>11,000 sqft</span>
+       </div>
+      </div>
+     </div><!-- Listing 6 -->
+     <div class="property-card bg-white/5 rounded-lg overflow-hidden reveal" style="transition-delay: 0.6s;">
+      <div class="relative h-64 overflow-hidden">
+       <div class="card-image absolute inset-0 bg-gradient-to-br from-[#1f1c2c] to-[#928dab]"></div><button class="heart-btn absolute top-4 right-4 w-10 h-10 bg-black/30 backdrop-blur rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg></button>
+      </div>
+      <div class="p-6">
+       <div class="flex justify-between items-start mb-2">
+        <h3 class="font-playfair text-lg">Aspen Mountain Lodge</h3><span class="text-[#C2A878] font-semibold text-sm">$9.8M</span>
+       </div>
+       <p class="text-gray-400 text-sm mb-3">Aspen, CO</p>
+       <div class="flex items-center space-x-3 text-xs text-gray-500"><span>6 Beds</span> <span>•</span> <span>7 Baths</span> <span>•</span> <span>8,500 sqft</span>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="text-center mt-12 reveal"><button class="btn-primary inline-flex items-center space-x-2 px-8 py-4 border border-[#C2A878] text-[#C2A878] hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all tracking-wider"> <span>VIEW ALL PROPERTIES</span>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg></button>
+    </div>
+   </div>
+  </section><!-- Virtual Tour Section -->
+  <section class="relative py-32 md:py-48 overflow-hidden">
+   <div class="absolute inset-0 parallax-container">
+    <div class="parallax-bg absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]" style="transform: scale(1.1);"></div>
+    <div class="absolute inset-0 video-overlay"></div><!-- Animated elements to simulate video feel -->
+    <div class="absolute inset-0 overflow-hidden">
+     <div class="absolute w-96 h-96 bg-[#C2A878]/5 rounded-full blur-3xl -top-20 -left-20 animate-pulse"></div>
+     <div class="absolute w-80 h-80 bg-white/5 rounded-full blur-3xl bottom-0 right-0 animate-pulse" style="animation-delay: 1s;"></div>
+    </div>
+   </div>
+   <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
+    <div class="reveal">
+     <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-4">IMMERSIVE EXPERIENCE</p>
+     <h2 id="tourHeadline" class="font-playfair text-4xl md:text-5xl lg:text-6xl mb-6">Experience Every Detail</h2>
+     <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">Step inside our luxury properties from anywhere in the world. Our virtual tours offer an immersive walkthrough experience.</p><button class="btn-primary inline-flex items-center space-x-3 px-10 py-5 bg-[#C2A878] text-[#0A0A0A] font-semibold tracking-wider hover:bg-[#d4bc92] transition-all group">
+      <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M8 5v14l11-7z" />
+      </svg><span>START VIRTUAL TOUR</span> </button>
+    </div>
+   </div>
+  </section><!-- Neighborhood Features -->
+  <section id="about" class="py-20 md:py-32 px-4 bg-[#0f0f0f]">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+     <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-2">LIFESTYLE &amp; AMENITIES</p>
+     <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl">Neighborhood Highlights</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8"><!-- Schools -->
+     <div class="neighborhood-item text-center reveal" style="transition-delay: 0.1s;">
+      <div class="icon-circle w-20 h-20 mx-auto mb-4 rounded-full border border-[#C2A878] flex items-center justify-center transition-all">
+       <svg class="w-8 h-8 text-[#C2A878]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+       </svg>
+      </div>
+      <h3 class="font-playfair text-lg mb-2">Top Schools</h3>
+      <p class="text-gray-400 text-sm">A-rated private &amp; public schools nearby</p>
+     </div><!-- Transit -->
+     <div class="neighborhood-item text-center reveal" style="transition-delay: 0.2s;">
+      <div class="icon-circle w-20 h-20 mx-auto mb-4 rounded-full border border-[#C2A878] flex items-center justify-center transition-all">
+       <svg class="w-8 h-8 text-[#C2A878]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+       </svg>
+      </div>
+      <h3 class="font-playfair text-lg mb-2">Easy Transit</h3>
+      <p class="text-gray-400 text-sm">Minutes from major highways &amp; airports</p>
+     </div><!-- Lifestyle -->
+     <div class="neighborhood-item text-center reveal" style="transition-delay: 0.3s;">
+      <div class="icon-circle w-20 h-20 mx-auto mb-4 rounded-full border border-[#C2A878] flex items-center justify-center transition-all">
+       <svg class="w-8 h-8 text-[#C2A878]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+       </svg>
+      </div>
+      <h3 class="font-playfair text-lg mb-2">Lifestyle</h3>
+      <p class="text-gray-400 text-sm">Fine dining, shopping &amp; entertainment</p>
+     </div><!-- Safety -->
+     <div class="neighborhood-item text-center reveal" style="transition-delay: 0.4s;">
+      <div class="icon-circle w-20 h-20 mx-auto mb-4 rounded-full border border-[#C2A878] flex items-center justify-center transition-all">
+       <svg class="w-8 h-8 text-[#C2A878]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+       </svg>
+      </div>
+      <h3 class="font-playfair text-lg mb-2">Safety</h3>
+      <p class="text-gray-400 text-sm">24/7 security &amp; gated communities</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Testimonials -->
+  <section class="py-20 md:py-32 px-4">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+     <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-2">CLIENT STORIES</p>
+     <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl">What Our Clients Say</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8"><!-- Testimonial 1 -->
+     <div class="testimonial-card bg-white/5 rounded-lg p-8 reveal" style="transition-delay: 0.1s;">
+      <div class="flex items-center space-x-1 mb-4">
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+      </div>
+      <p class="text-gray-300 mb-6 italic">"VISSUAL Realty exceeded all our expectations. They found us our dream home in Beverly Hills within weeks. The level of service was impeccable."</p>
+      <div class="flex items-center space-x-4">
+       <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#C2A878] to-[#8B7355] flex items-center justify-center text-[#0A0A0A] font-bold">
+        MJ
+       </div>
+       <div>
+        <p class="font-semibold">Michael &amp; Jennifer</p>
+        <p class="text-gray-500 text-sm">Beverly Hills, CA</p>
+       </div>
+      </div>
+     </div><!-- Testimonial 2 -->
+     <div class="testimonial-card bg-white/5 rounded-lg p-8 reveal" style="transition-delay: 0.2s;">
+      <div class="flex items-center space-x-1 mb-4">
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+      </div>
+      <p class="text-gray-300 mb-6 italic">"As an international buyer, I needed agents who understood the complexities of overseas purchases. VISSUAL made the entire process seamless."</p>
+      <div class="flex items-center space-x-4">
+       <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#5A5A5A] to-[#3A3A3A] flex items-center justify-center text-white font-bold">
+        ST
+       </div>
+       <div>
+        <p class="font-semibold">Sarah Thompson</p>
+        <p class="text-gray-500 text-sm">Manhattan, NY</p>
+       </div>
+      </div>
+     </div><!-- Testimonial 3 -->
+     <div class="testimonial-card bg-white/5 rounded-lg p-8 reveal" style="transition-delay: 0.3s;">
+      <div class="flex items-center space-x-1 mb-4">
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+       <svg class="w-5 h-5 text-[#C2A878]" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+       </svg>
+      </div>
+      <p class="text-gray-300 mb-6 italic">"Selling our waterfront property seemed daunting, but VISSUAL's marketing expertise brought in qualified buyers within the first week. Truly exceptional."</p>
+      <div class="flex items-center space-x-4">
+       <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#C2A878] to-[#8B7355] flex items-center justify-center text-[#0A0A0A] font-bold">
+        RC
+       </div>
+       <div>
+        <p class="font-semibold">Robert Chen</p>
+        <p class="text-gray-500 text-sm">Miami Beach, FL</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Agent Profiles -->
+  <section id="agents" class="py-20 md:py-32 px-4 bg-[#0f0f0f]">
+   <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+     <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-2">OUR TEAM</p>
+     <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl">Meet Our Top Agents</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"><!-- Agent 1 -->
+     <div class="agent-card group reveal" style="transition-delay: 0.1s;">
+      <div class="relative overflow-hidden rounded-lg mb-4">
+       <div class="aspect-[3/4] bg-gradient-to-br from-[#2d3436] to-[#636e72]"></div>
+       <div class="agent-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent flex items-end p-6">
+        <div class="flex space-x-3"><a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg></a> <a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg></a>
+        </div>
+       </div>
+      </div>
+      <h3 class="font-playfair text-xl mb-1">Alexandra Rivera</h3>
+      <p class="text-[#C2A878] text-sm mb-2">Senior Luxury Specialist</p>
+      <p class="text-gray-500 text-sm">$450M+ in Sales</p>
+     </div><!-- Agent 2 -->
+     <div class="agent-card group reveal" style="transition-delay: 0.2s;">
+      <div class="relative overflow-hidden rounded-lg mb-4">
+       <div class="aspect-[3/4] bg-gradient-to-br from-[#434343] to-[#000000]"></div>
+       <div class="agent-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent flex items-end p-6">
+        <div class="flex space-x-3"><a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg></a> <a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg></a>
+        </div>
+       </div>
+      </div>
+      <h3 class="font-playfair text-xl mb-1">James Morrison</h3>
+      <p class="text-[#C2A878] text-sm mb-2">Managing Director</p>
+      <p class="text-gray-500 text-sm">$680M+ in Sales</p>
+     </div><!-- Agent 3 -->
+     <div class="agent-card group reveal" style="transition-delay: 0.3s;">
+      <div class="relative overflow-hidden rounded-lg mb-4">
+       <div class="aspect-[3/4] bg-gradient-to-br from-[#536976] to-[#292e49]"></div>
+       <div class="agent-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent flex items-end p-6">
+        <div class="flex space-x-3"><a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg></a> <a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg></a>
+        </div>
+       </div>
+      </div>
+      <h3 class="font-playfair text-xl mb-1">Victoria Chen</h3>
+      <p class="text-[#C2A878] text-sm mb-2">International Specialist</p>
+      <p class="text-gray-500 text-sm">$320M+ in Sales</p>
+     </div><!-- Agent 4 -->
+     <div class="agent-card group reveal" style="transition-delay: 0.4s;">
+      <div class="relative overflow-hidden rounded-lg mb-4">
+       <div class="aspect-[3/4] bg-gradient-to-br from-[#0f2027] to-[#2c5364]"></div>
+       <div class="agent-overlay absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent flex items-end p-6">
+        <div class="flex space-x-3"><a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg></a> <a href="#" class="w-10 h-10 bg-white/10 backdrop-blur rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg></a>
+        </div>
+       </div>
+      </div>
+      <h3 class="font-playfair text-xl mb-1">Marcus Williams</h3>
+      <p class="text-[#C2A878] text-sm mb-2">Waterfront Specialist</p>
+      <p class="text-gray-500 text-sm">$290M+ in Sales</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Newsletter Section -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+   <div class="absolute inset-0 bg-gradient-to-r from-[#1a1a2e] to-[#16213e]"></div>
+   <div class="absolute inset-0 opacity-20">
+    <div class="absolute w-full h-full bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23C2A878%22%20fill-opacity%3D%220.15%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
+   </div>
+   <div class="relative z-10 max-w-4xl mx-auto text-center px-4 reveal">
+    <p class="text-[#C2A878] text-sm tracking-[0.3em] mb-4">STAY UPDATED</p>
+    <h2 id="newsletterTitle" class="font-playfair text-3xl md:text-4xl lg:text-5xl mb-4">Get the Latest Listings Delivered</h2>
+    <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Be the first to know about new luxury properties, market insights, and exclusive opportunities.</p>
+    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto"><input type="email" placeholder="Enter your email address" class="flex-1 bg-white/10 border border-white/20 rounded px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:border-[#C2A878] transition-all" required> <button type="submit" class="btn-primary bg-[#C2A878] text-[#0A0A0A] font-semibold px-8 py-4 rounded hover:bg-[#d4bc92] transition-all tracking-wider whitespace-nowrap"> SUBSCRIBE </button>
+    </form>
+    <p class="text-gray-500 text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p><!-- Success message -->
+    <div id="newsletterSuccess" class="hidden mt-6 p-4 bg-[#C2A878]/20 border border-[#C2A878] rounded text-[#C2A878]">
+     Thank you for subscribing! You'll receive our latest listings soon.
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer id="contact" class="bg-[#0A0A0A] border-t border-white/10 pt-16 pb-8 px-4">
+   <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12"><!-- Brand -->
+     <div><a href="#" class="inline-block mb-6">
+       <div class="text-2xl font-playfair tracking-widest"><span class="text-[#C2A878]">VISSUAL</span> <span class="text-white font-light ml-1">Realty</span>
+       </div></a>
+      <p class="text-gray-400 mb-6">Curating exceptional properties for discerning clients since 2008.</p>
+      <div class="flex space-x-4"><a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+        </svg></a> <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+        </svg></a> <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-[#C2A878] hover:text-[#0A0A0A] transition-all">
+        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24">
+         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+        </svg></a>
+      </div>
+     </div><!-- Quick Links -->
+     <div>
+      <h4 class="font-semibold text-lg mb-6">Quick Links</h4>
+      <ul class="space-y-3">
+       <li><a href="#listings" class="text-gray-400 hover:text-[#C2A878] transition-colors">All Listings</a></li>
+       <li><a href="#" class="text-gray-400 hover:text-[#C2A878] transition-colors">Featured Properties</a></li>
+       <li><a href="#agents" class="text-gray-400 hover:text-[#C2A878] transition-colors">Our Agents</a></li>
+       <li><a href="#about" class="text-gray-400 hover:text-[#C2A878] transition-colors">About Us</a></li>
+       <li><a href="#" class="text-gray-400 hover:text-[#C2A878] transition-colors">Sell Your Home</a></li>
+      </ul>
+     </div><!-- Locations -->
+     <div>
+      <h4 class="font-semibold text-lg mb-6">Locations</h4>
+      <ul class="space-y-3">
+       <li><a href="#" class="text-gray-400 hover:text-[#C2A878] transition-colors">Beverly Hills</a></li>
+       <li><a href="#" class="text-gray-400 hover:text-[#C2A878] transition-colors">Malibu</a></li>
+       <li><a href="#" class="text-gray-400 hover:text-[#C2A878] transition-colors">Manhattan</a></li>
+       <li><a href="#" class="text-gray-400 hover:text-[#C2A878] transition-colors">Miami Beach</a></li>
+       <li><a href="#" class="text-gray-400 hover:text-[#C2A878] transition-colors">Aspen</a></li>
+      </ul>
+     </div><!-- Contact -->
+     <div>
+      <h4 class="font-semibold text-lg mb-6">Contact Us</h4>
+      <ul class="space-y-4">
+       <li class="flex items-start space-x-3">
+        <svg class="w-5 h-5 text-[#C2A878] mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg><span class="text-gray-400">9876 Wilshire Blvd, Suite 500<br>
+         Beverly Hills, CA 90210</span></li>
+       <li class="flex items-center space-x-3">
+        <svg class="w-5 h-5 text-[#C2A878]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </svg><a href="tel:+13105551234" class="text-gray-400 hover:text-[#C2A878] transition-colors">+1 (310) 555-1234</a></li>
+       <li class="flex items-center space-x-3">
+        <svg class="w-5 h-5 text-[#C2A878]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg><a href="mailto:hello@vissualrealty.com" class="text-gray-400 hover:text-[#C2A878] transition-colors">hello@vissualrealty.com</a></li>
+      </ul>
+     </div>
+    </div><!-- Bottom Bar -->
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+     <p>© 2024 VISSUAL Realty. All rights reserved.</p>
+     <div class="flex space-x-6 mt-4 md:mt-0"><a href="#" class="hover:text-[#C2A878] transition-colors">Privacy Policy</a> <a href="#" class="hover:text-[#C2A878] transition-colors">Terms of Service</a> <a href="#" class="hover:text-[#C2A878] transition-colors">Sitemap</a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      hero_headline: 'Discover Exceptional Properties',
+      hero_subtext: 'Luxury homes. Curated for you.',
+      cta_primary: 'BROWSE LISTINGS',
+      cta_secondary: 'CONTACT AN AGENT',
+      featured_title: 'Featured Properties',
+      listings_title: 'Premium Listings',
+      tour_headline: 'Experience Every Detail',
+      newsletter_title: 'Get the Latest Listings Delivered',
+      background_color: '#0A0A0A',
+      surface_color: '#0f0f0f',
+      text_color: '#FFFFFF',
+      accent_color: '#C2A878',
+      secondary_text_color: '#5A5A5A'
+    };
+
+    let config = { ...defaultConfig };
+
+    // SDK initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => window.elementSdk.setConfig({ surface_color: value })
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            },
+            {
+              get: () => cfg.secondary_text_color || defaultConfig.secondary_text_color,
+              set: (value) => window.elementSdk.setConfig({ secondary_text_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['hero_headline', cfg.hero_headline || defaultConfig.hero_headline],
+          ['hero_subtext', cfg.hero_subtext || defaultConfig.hero_subtext],
+          ['cta_primary', cfg.cta_primary || defaultConfig.cta_primary],
+          ['cta_secondary', cfg.cta_secondary || defaultConfig.cta_secondary],
+          ['featured_title', cfg.featured_title || defaultConfig.featured_title],
+          ['listings_title', cfg.listings_title || defaultConfig.listings_title],
+          ['tour_headline', cfg.tour_headline || defaultConfig.tour_headline],
+          ['newsletter_title', cfg.newsletter_title || defaultConfig.newsletter_title]
+        ])
+      });
+    }
+
+    function updateUI() {
+      // Update text content
+      document.getElementById('heroHeadline').textContent = config.hero_headline || defaultConfig.hero_headline;
+      document.getElementById('heroSubtext').textContent = config.hero_subtext || defaultConfig.hero_subtext;
+      document.getElementById('ctaPrimary').textContent = config.cta_primary || defaultConfig.cta_primary;
+      document.getElementById('ctaSecondary').textContent = config.cta_secondary || defaultConfig.cta_secondary;
+      document.getElementById('featuredTitle').textContent = config.featured_title || defaultConfig.featured_title;
+      document.getElementById('listingsTitle').textContent = config.listings_title || defaultConfig.listings_title;
+      document.getElementById('tourHeadline').textContent = config.tour_headline || defaultConfig.tour_headline;
+      document.getElementById('newsletterTitle').textContent = config.newsletter_title || defaultConfig.newsletter_title;
+
+      // Update colors
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const secondaryTextColor = config.secondary_text_color || defaultConfig.secondary_text_color;
+
+      document.body.style.backgroundColor = bgColor;
+      document.body.style.color = textColor;
+
+      // Update CSS custom properties
+      document.documentElement.style.setProperty('--primary', bgColor);
+      document.documentElement.style.setProperty('--secondary', textColor);
+      document.documentElement.style.setProperty('--accent', accentColor);
+      document.documentElement.style.setProperty('--slate', secondaryTextColor);
+    }
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 50) {
+        header.classList.remove('header-transparent');
+        header.classList.add('header-solid');
+      } else {
+        header.classList.remove('header-solid');
+        header.classList.add('header-transparent');
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const closeMobileMenu = document.getElementById('closeMobileMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.add('open');
+      menuOverlay.classList.remove('hidden');
+    });
+
+    closeMobileMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.add('hidden');
+    });
+
+    menuOverlay.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.add('hidden');
+    });
+
+    // Close mobile menu when clicking nav links
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.add('hidden');
+      });
+    });
+
+    // Hero carousel
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.dot');
+    let currentHeroSlide = 0;
+    let heroInterval;
+
+    function showHeroSlide(index) {
+      heroSlides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? '1' : '0';
+      });
+      heroDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+        dot.classList.toggle('bg-[#C2A878]', i === index);
+        dot.classList.toggle('bg-white/30', i !== index);
+      });
+    }
+
+    function nextHeroSlide() {
+      currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+      showHeroSlide(currentHeroSlide);
+    }
+
+    heroDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentHeroSlide = index;
+        showHeroSlide(currentHeroSlide);
+        clearInterval(heroInterval);
+        heroInterval = setInterval(nextHeroSlide, 6000);
+      });
+    });
+
+    heroInterval = setInterval(nextHeroSlide, 6000);
+
+    // Featured carousel
+    const featuredCarousel = document.getElementById('featuredCarousel');
+    const featuredPrev = document.getElementById('featuredPrev');
+    const featuredNext = document.getElementById('featuredNext');
+    let featuredPosition = 0;
+
+    function updateFeaturedCarousel() {
+      const cards = featuredCarousel.children;
+      const cardWidth = cards[0].offsetWidth;
+      const maxPosition = Math.max(0, (cards.length - getVisibleCards()) * cardWidth);
+      
+      featuredPosition = Math.min(Math.max(0, featuredPosition), maxPosition);
+      featuredCarousel.style.transform = `translateX(-${featuredPosition}px)`;
+    }
+
+    function getVisibleCards() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    }
+
+    featuredPrev.addEventListener('click', () => {
+      const cardWidth = featuredCarousel.children[0].offsetWidth;
+      featuredPosition -= cardWidth;
+      updateFeaturedCarousel();
+    });
+
+    featuredNext.addEventListener('click', () => {
+      const cardWidth = featuredCarousel.children[0].offsetWidth;
+      featuredPosition += cardWidth;
+      updateFeaturedCarousel();
+    });
+
+    window.addEventListener('resize', updateFeaturedCarousel);
+
+    // Heart button toggle
+    document.querySelectorAll('.heart-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.classList.toggle('active');
+      });
+    });
+
+    // Newsletter form
+    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterSuccess = document.getElementById('newsletterSuccess');
+
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      newsletterForm.classList.add('hidden');
+      newsletterSuccess.classList.remove('hidden');
+    });
+
+    // Intersection Observer for reveal animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Parallax effect
+    const parallaxBg = document.querySelector('.parallax-bg');
+    
+    window.addEventListener('scroll', () => {
+      if (parallaxBg) {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.3;
+        parallaxBg.style.transform = `translateY(${rate}px) scale(1.1)`;
+      }
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Initial UI update
+    updateUI();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c3d9ec97410ba08',t:'MTc2OTQwNTQ0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
